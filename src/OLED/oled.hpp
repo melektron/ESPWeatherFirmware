@@ -14,9 +14,9 @@
 
 
 #define GRAPH_WIDTH 128
-#define GRAPH_HEIGHT 34
+#define GRAPH_HEIGHT 44
 #define GRAPH_X 0
-#define GRAPH_Y 30
+#define GRAPH_Y 20
 
 
 namespace OLED

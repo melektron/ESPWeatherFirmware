@@ -39,6 +39,7 @@ double d_min(double arr[], uint8_t length=GRAPH_WIDTH)
 }
 
 
+// display stuff
 U8G2_SH1106_128X64_NONAME_F_HW_I2C OLED::u8g2(U8G2_R0);
 double OLED::last_data[GRAPH_WIDTH];
 uint8_t OLED::curr_pop = 0;
@@ -82,8 +83,8 @@ void OLED::draw_graph(Sensor::w_data_t d)
     last_data[0] = d.temperature;
 
     // draw graph
-    double max_val = d_max(last_data, curr_pop) + .5;
-    double min_val = d_min(last_data, curr_pop) - .5;
+    double max_val = d_max(last_data, curr_pop) + .1;
+    double min_val = d_min(last_data, curr_pop) - .1;
 
     uint8_t last = 0;
     for (int i = 0; i < curr_pop; i++)
