@@ -22,7 +22,7 @@
 
 
 // DHT stuff
-#define DHTPIN D3
+#define DHTPIN D4
 #define DHTTYPE DHT22
 
 

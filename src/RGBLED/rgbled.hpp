@@ -14,8 +14,8 @@
 
 
 #define R_PIN D6
-#define G_PIN D5
-#define B_PIN D0
+#define G_PIN D7
+#define B_PIN D8
 
 
 #define DHT_MIN -20

@@ -11,7 +11,7 @@
 #pragma once
 #include <DHT.h>
 
-#define DHT_PIN D3
+#define DHT_PIN D4
 #define DHT_TYPE DHT22
 
 
