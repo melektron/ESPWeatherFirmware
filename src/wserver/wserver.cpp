@@ -4,15 +4,34 @@
 
 const char *Web::serverName = "http://home.nilus.ink/weather/";
 
+void showConnectPage(int nr_dots)
+{
+    char buf[51] = {0};
+
+    OLED::u8g2.firstPage();
+    OLED::u8g2.setFont(u8g2_font_ncenB10_tr);
+
+    OLED::u8g2.drawStr(10, 18, "Connecting to");
+
+#define DOT_OR_NOT(condition) ((condition) ? '.' : ' ')
+    snprintf(buf, 50, "WiFi %c%c%c", 
+        DOT_OR_NOT(nr_dots > 0),
+        DOT_OR_NOT(nr_dots > 1),
+        DOT_OR_NOT(nr_dots > 2));
+    OLED::u8g2.drawStr(45, 34, buf);
+    
+    OLED::u8g2.setFont(u8g2_font_ncenB08_tr);
+    snprintf(buf, 50, "MAC: %s", WiFi.macAddress().c_str());
+    OLED::u8g2.drawStr(1, 55, buf);
+
+    OLED::u8g2.nextPage();
+}
+
 void Web::setup()
 {
     Serial.println("connecting to wifi...");
 
-    OLED::u8g2.firstPage();
-    OLED::u8g2.setFont(u8g2_font_ncenB10_tr);
-    OLED::u8g2.drawStr(10, 28, "Connecting to");
-    OLED::u8g2.drawStr(45, 44, "WiFi");
-    OLED::u8g2.nextPage();
+    showConnectPage(0);
 
     WiFi.begin(SSID, PWD);
     int i = 0;
@@ -23,20 +42,12 @@ void Web::setup()
         delay(500);
         Serial.print("*");
 
-        std::string dots(i % 4, '.');
-        dots = "WiFi " + dots;
-
-        OLED::u8g2.firstPage();
-        OLED::u8g2.setFont(u8g2_font_ncenB10_tr);
-        OLED::u8g2.drawStr(10, 28, "Connecting to");
-        OLED::u8g2.drawStr(45, 44, dots.c_str());
-        OLED::u8g2.nextPage();
+        showConnectPage(i % 4);
     }
 
     Serial.print("The IP Address of ESP8266 Module is: ");
     Serial.print(WiFi.localIP()); // Print the IP address
 }
-
 void Web::sendData(Sensor::w_data_t d)
 {
     if (!(isnan(d.temperature) || isnan(d.humidity)))
